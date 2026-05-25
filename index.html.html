@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALeb BTP Beta - ERP & CRM</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 800: '#1a2942', 900: '#0f172a' },
+                        orange: { 500: '#f97316', 600: '#ea580c' },
+                        gray: { 50: '#f9fafb', 100: '#f3f4f6', 800: '#1f2937', 900: '#111827' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .dark .glass {
+            background: rgba(31, 41, 55, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        .slide-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 overflow-hidden flex h-screen">
+
+    <aside class="w-64 bg-navy-900 text-white flex flex-col transition-all duration-300 shadow-xl z-20">
+        <div class="p-6 flex items-center gap-3 border-b border-navy-800">
+            <div class="w-10 h-10 rounded-lg bg-orange-500 flex items-center justify-center text-xl font-bold shadow-lg shadow-orange-500/30">
+                T
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-wide">TALeb BTP</h1>
+                <span class="text-xs text-orange-500 font-medium tracking-widest uppercase">Beta ERP</span>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1" id="sidebar-nav">
+            </nav>
+
+        <div class="p-4 border-t border-navy-800">
+            <div class="flex items-center gap-3 p-2 rounded-lg bg-navy-800/50">
+                <img src="https://i.pravatar.cc/150?img=11" alt="Profile" class="w-10 h-10 rounded-full border-2 border-orange-500">
+                <div>
+                    <p class="text-sm font-semibold">Youssef Alaoui</p>
+                    <p class="text-xs text-gray-400">Directeur Général</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+        <header class="h-20 glass flex items-center justify-between px-8 z-10 border-b border-gray-200 dark:border-gray-800">
+            <div class="flex items-center gap-4 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full w-96 border border-gray-200 dark:border-gray-700">
+                <i class="fas fa-search text-gray-400"></i>
+                <input type="text" placeholder="Rechercher un chantier, client, facture..." class="bg-transparent border-none outline-none w-full text-sm text-gray-700 dark:text-gray-200">
+            </div>
+
+            <div class="flex items-center gap-6">
+                <span id="current-date" class="text-sm font-medium text-gray-500 hidden md:block"></span>
+                <button onclick="toggleDarkMode()" class="text-gray-500 hover:text-orange-500 transition-colors w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <div class="relative">
+                    <button class="text-gray-500 hover:text-orange-500 transition-colors w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+                    </button>
+                </div>
+                <button class="bg-navy-900 hover:bg-navy-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Action Rapide
+                </button>
+            </div>
+        </header>
+
+        <div id="app-content" class="flex-1 overflow-y-auto p-8 scroll-smooth">
+            </div>
+    </main>
+
+    <script>
+        // ==========================================
+        // 1. MOCK DATA (Moroccan BTP Context)
+        // ==========================================
+        
+        const database = {
+            company: { balance: 14580000.00, revenue: 32450000.00, expenses: 17870000.00 },
+            navItems: [
+                { id: 'dashboard', icon: 'fa-chart-pie', label: 'Tableau de bord' },
+                { id: 'chantiers', icon: 'fa-hard-hat', label: 'Chantiers' },
+                { id: 'comptabilite', icon: 'fa-file-invoice-dollar', label: 'Comptabilité' },
+                { id: 'clients', icon: 'fa-building', label: 'Clients' },
+                { id: 'employes', icon: 'fa-users-gear', label: 'Employés' },
+                { id: 'stocks', icon: 'fa-boxes-stacked', label: 'Stocks & Matériel' },
+            ],
+            kpis: [
+                { title: "Chiffre d'Affaires", value: "32,45M MAD", trend: "+14%", icon: "fa-wallet", color: "text-green-500", bg: "bg-green-100" },
+                { title: "Dépenses", value: "17,87M MAD", trend: "-2%", icon: "fa-chart-line", color: "text-red-500", bg: "bg-red-100" },
+                { title: "Chantiers Actifs", value: "12", trend: "+3", icon: "fa-helmet-safety", color: "text-orange-500", bg: "bg-orange-100" },
+                { title: "Factures Impayées", value: "2,1M MAD", trend: "-5%", icon: "fa-file-circle-exclamation", color: "text-yellow-500", bg: "bg-yellow-100" }
+            ],
+            chantiers: [
+                { id: "CH-001", nom: "Résidence Horizon", lieu: "Casablanca, Maarif", budget: 45000000, depenses: 21000000, progression: 45, status: "En cours", chef: "Rachid Benali" },
+                { id: "CH-002", nom: "Marina Tower B", lieu: "Tanger", budget: 85000000, depenses: 78000000, progression: 92, status: "Finition", chef: "Amine Tazi" },
+                { id: "CH-003", nom: "Hôpital Sud", lieu: "Rabat, Hay Riad", budget: 120000000, depenses: 15000000, progression: 15, status: "Fondations", chef: "Hassan El Fassi" },
+                { id: "CH-004", nom: "Villa Prestige", lieu: "Marrakech, Palmeraie", budget: 8500000, depenses: 8500000, progression: 100, status: "Terminé", chef: "Karim Ziani" },
+                { id: "CH-005", nom: "Usine Renault Ext", lieu: "Kenitra", budget: 32000000, depenses: 12000000, progression: 35, status: "En cours", chef: "Omar Mansour" }
+            ],
+            transactions: [
+                { date: "25/05/2026", desc: "Paiement Fournisseur (LafargeHolcim)", montant: -245000, type: "Debit", chantier: "Résidence Horizon" },
+                { date: "22/05/2026", desc: "Encaissement Client (Casa Promotion)", montant: 1500000, type: "Credit", chantier: "Marina Tower B" },
+                { date: "18/05/2026", desc: "Salaires Mai - Equipe Casa", montant: -480000, type: "Debit", chantier: "Global" },
+                { date: "15/05/2026", desc: "Achat Acier (Sonasid)", montant: -850000, type: "Debit", chantier: "Hôpital Sud" },
+                { date: "10/05/2026", desc: "Avance Client (Etat Marocain)", montant: 5000000, type: "Credit", chantier: "Hôpital Sud" }
+            ],
+            clients: [
+                { nom: "Atlas Infrastructure", contact: "M. Idrissi", email: "contact@atlas-infra.ma", tel: "+212 5 22 33 44 55", status: "Actif", projets: 4 },
+                { nom: "Casa Promotion Immobilière", contact: "Mme. Bennani", email: "direction@casapromo.ma", tel: "+212 5 22 11 22 33", status: "Actif", projets: 2 },
+                { nom: "Rabat Aménagement", contact: "M. Alaoui", email: "marches@rabat-am.gov.ma", tel: "+212 5 37 99 88 77", status: "VIP", projets: 6 },
+                { nom: "Groupe El Hana", contact: "M. Chraibi", email: "achats@elhana.ma", tel: "+212 6 61 00 11 22", status: "Inactif", projets: 1 }
+            ]
+        };
+
+        // ==========================================
+        // 2. STATE MANAGEMENT
+        // ==========================================
+        let currentView = 'dashboard';
+        let chartInstances = {};
+
+        // ==========================================
+        // 3. CORE FUNCTIONS
+        // ==========================================
+        
+        function initApp() {
+            document.getElementById('current-date').innerText = new Date().toLocaleDateString('fr-MA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            renderNavigation();
+            navigate('dashboard');
+            
+            // Check local storage for theme
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+            }
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                icon.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+            // Re-render current view to update charts theme
+            navigate(currentView);
+        }
+
+        function renderNavigation() {
+            const nav = document.getElementById('sidebar-nav');
+            nav.innerHTML = database.navItems.map(item => `
+                <button onclick="navigate('${item.id}')" id="nav-${item.id}" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${currentView === item.id ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-gray-300 hover:bg-navy-800 hover:text-white'}">
+                    <i class="fas ${item.icon} w-5"></i>
+                    ${item.label}
+                </button>
+            `).join('');
+        }
+
+        function navigate(viewId) {
+            currentView = viewId;
+            renderNavigation();
+            
+            const contentDiv = document.getElementById('app-content');
+            contentDiv.innerHTML = '<div class="flex h-full items-center justify-center"><i class="fas fa-spinner fa-spin text-4xl text-orange-500"></i></div>';
+            
+            // Destroy existing charts to prevent memory leaks
+            Object.values(chartInstances).forEach(chart => chart.destroy());
+            chartInstances = {};
+
+            setTimeout(() => {
+                switch(viewId) {
+                    case 'dashboard': contentDiv.innerHTML = getDashboardHTML(); initDashboardCharts(); break;
+                    case 'chantiers': contentDiv.innerHTML = getChantiersHTML(); break;
+                    case 'comptabilite': contentDiv.innerHTML = getComptabiliteHTML(); initComptaCharts(); break;
+                    case 'clients': contentDiv.innerHTML = getClientsHTML(); break;
+                    default: contentDiv.innerHTML = `<div class="text-center py-20 fade-in"><h2 class="text-2xl font-bold text-gray-500">Module ${viewId} en cours de développement...</h2><p class="text-gray-400 mt-2">Bientôt disponible dans TALeb BTP Beta.</p></div>`;
+                }
+            }, 300); // Simulate network load
+        }
+
+        // ==========================================
+        // 4. VIEWS HTML GENERATORS
+        // ==========================================
+
+        function getDashboardHTML() {
+            const kpiCards = database.kpis.map((kpi, index) => `
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 slide-up" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">${kpi.title}</p>
+                            <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">${kpi.value}</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-full ${kpi.bg} ${kpi.color} flex items-center justify-center text-xl">
+                            <i class="fas ${kpi.icon}"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center gap-2 text-sm">
+                        <span class="${kpi.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'} font-medium"><i class="fas ${kpi.trend.startsWith('+') ? 'fa-arrow-up' : 'fa-arrow-down'} mr-1"></i>${kpi.trend}</span>
+                        <span class="text-gray-400">vs mois dernier</span>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+                <div class="space-y-6 fade-in">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Aperçu Général</h2>
+                        <button class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                            <i class="fas fa-download mr-2"></i> Exporter Rapport
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        ${kpiCards}
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+                        <div class="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 slide-up" style="animation-delay: 0.4s">
+                            <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-white">Évolution du Chiffre d'Affaires (2025-2026)</h3>
+                            <canvas id="revenueChart" height="100"></canvas>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 slide-up" style="animation-delay: 0.5s">
+                            <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-white">Activités Récentes</h3>
+                            <div class="space-y-4">
+                                ${database.transactions.slice(0,4).map(t => `
+                                    <div class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                                        <div class="w-10 h-10 rounded-full ${t.type === 'Credit' ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'} flex items-center justify-center">
+                                            <i class="fas ${t.type === 'Credit' ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-semibold text-gray-800 dark:text-white truncate">${t.desc}</p>
+                                            <p class="text-xs text-gray-500">${t.chantier} • ${t.date}</p>
+                                        </div>
+                                        <div class="text-sm font-bold ${t.type === 'Credit' ? 'text-green-500' : 'text-red-500'}">
+                                            ${t.montant > 0 ? '+' : ''}${t.montant.toLocaleString('fr-MA')} MAD
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getChantiersHTML() {
+            const cards = database.chantiers.map((ch, index) => {
+                let statusColor = ch.status === 'En cours' ? 'bg-blue-100 text-blue-600' : ch.status === 'Finition' ? 'bg-orange-100 text-orange-600' : ch.status === 'Fondations' ? 'bg-purple-100 text-purple-600' : 'bg-green-100 text-green-600';
+                return `
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 slide-up hover:shadow-md transition-shadow cursor-pointer" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="text-xs font-bold px-2 py-1 rounded-md ${statusColor}">${ch.status}</span>
+                            <h3 class="text-lg font-bold mt-2 text-gray-800 dark:text-white">${ch.nom}</h3>
+                            <p class="text-sm text-gray-500"><i class="fas fa-map-marker-alt mr-1"></i> ${ch.lieu}</p>
+                        </div>
+                        <button class="text-gray-400 hover:text-orange-500"><i class="fas fa-ellipsis-v"></i></button>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-500">Progression</span>
+                            <span class="font-bold text-gray-800 dark:text-white">${ch.progression}%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div class="bg-orange-500 h-2 rounded-full" style="width: ${ch.progression}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <div>
+                            <p class="text-gray-500 text-xs">Budget Alloué</p>
+                            <p class="font-bold text-gray-800 dark:text-white">${(ch.budget / 1000000).toFixed(1)}M MAD</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-xs">Dépensé</p>
+                            <p class="font-bold text-gray-800 dark:text-white">${(ch.depenses / 1000000).toFixed(1)}M MAD</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 flex items-center gap-2 pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <div class="w-8 h-8 rounded-full bg-navy-800 text-white flex items-center justify-center text-xs font-bold">${ch.chef.charAt(0)}</div>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Chef: <span class="font-medium text-gray-800 dark:text-white">${ch.chef}</span></p>
+                    </div>
+                </div>
+            `}).join('');
+
+            return `
+                <div class="space-y-6 fade-in">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Gestion des Chantiers</h2>
+                            <p class="text-gray-500 text-sm">Suivi et pilotage des projets de construction</p>
+                        </div>
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg shadow-orange-500/30 flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Nouveau Chantier
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${cards}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getComptabiliteHTML() {
+            const trs = database.transactions.map(t => `
+                <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
+                    <td class="p-4 text-sm text-gray-500">${t.date}</td>
+                    <td class="p-4 text-sm font-medium text-gray-800 dark:text-gray-200">${t.desc}</td>
+                    <td class="p-4 text-sm text-gray-500">${t.chantier}</td>
+                    <td class="p-4 text-sm font-bold text-right ${t.type === 'Credit' ? 'text-green-500' : 'text-gray-800 dark:text-white'}">${t.montant.toLocaleString('fr-MA')} MAD</td>
+                    <td class="p-4 text-center">
+                        <span class="px-2 py-1 text-xs rounded-md ${t.type === 'Credit' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">${t.type}</span>
+                    </td>
+                </tr>
+            `).join('');
+
+            return `
+                <div class="space-y-6 fade-in">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Comptabilité & Finance</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-navy-900 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+                            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-orange-500 rounded-full opacity-20 blur-2xl"></div>
+                            <p class="text-gray-300 text-sm">Trésorerie Actuelle</p>
+                            <h3 class="text-3xl font-bold mt-2">${database.company.balance.toLocaleString('fr-MA')} MAD</h3>
+                            <button class="mt-4 text-sm text-orange-400 hover:text-orange-300 font-medium">Voir le détail bancaire <i class="fas fa-arrow-right ml-1"></i></button>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 col-span-2">
+                             <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-white">Répartition des Dépenses</h3>
+                             </div>
+                             <div class="h-40 w-full relative">
+                                <canvas id="expensesChart"></canvas>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden slide-up">
+                        <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">Journal Comptable (Mai 2026)</h3>
+                            <div class="flex gap-2">
+                                <button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><i class="fas fa-filter"></i></button>
+                                <button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><i class="fas fa-print"></i></button>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-gray-50 dark:bg-gray-900/50 text-gray-500 text-xs uppercase tracking-wider">
+                                        <th class="p-4 font-medium">Date</th>
+                                        <th class="p-4 font-medium">Libellé</th>
+                                        <th class="p-4 font-medium">Imputation</th>
+                                        <th class="p-4 font-medium text-right">Montant</th>
+                                        <th class="p-4 font-medium text-center">Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${trs}</tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getClientsHTML() {
+            const rows = database.clients.map((c, i) => `
+                <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition slide-up" style="animation-delay: ${i * 0.1}s">
+                    <td class="p-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-navy-800 text-white flex items-center justify-center font-bold text-lg">${c.nom.charAt(0)}</div>
+                            <div>
+                                <p class="font-bold text-gray-800 dark:text-white">${c.nom}</p>
+                                <p class="text-xs text-gray-500">${c.email}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4 text-sm text-gray-600 dark:text-gray-300">${c.contact}</td>
+                    <td class="p-4 text-sm text-gray-600 dark:text-gray-300">${c.tel}</td>
+                    <td class="p-4 text-center text-sm font-bold text-gray-800 dark:text-white">${c.projets}</td>
+                    <td class="p-4">
+                        <span class="px-3 py-1 text-xs rounded-full ${c.status === 'Actif' ? 'bg-green-100 text-green-600' : c.status === 'VIP' ? 'bg-purple-100 text-purple-600' : 'bg-gray-100 text-gray-600'}">${c.status}</span>
+                    </td>
+                    <td class="p-4 text-right">
+                        <button class="text-gray-400 hover:text-orange-500 transition px-2"><i class="fas fa-edit"></i></button>
+                        <button class="text-gray-400 hover:text-red-500 transition px-2"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            return `
+                <div class="space-y-6 fade-in">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Annuaire Clients B2B</h2>
+                        <button class="bg-navy-900 hover:bg-navy-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg flex items-center gap-2">
+                            <i class="fas fa-user-plus"></i> Nouveau Client
+                        </button>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                        <div class="p-4 border-b border-gray-100 dark:border-gray-800 flex gap-4 bg-gray-50 dark:bg-gray-900/50">
+                            <div class="flex-1 relative">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                                <input type="text" placeholder="Rechercher une entreprise..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm outline-none focus:border-orange-500">
+                            </div>
+                            <button class="px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-800 font-medium"><i class="fas fa-filter mr-2"></i>Filtres</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-white dark:bg-gray-800 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100 dark:border-gray-700">
+                                        <th class="p-4 font-medium">Entreprise</th>
+                                        <th class="p-4 font-medium">Contact Principal</th>
+                                        <th class="p-4 font-medium">Téléphone</th>
+                                        <th class="p-4 font-medium text-center">Projets</th>
+                                        <th class="p-4 font-medium">Statut</th>
+                                        <th class="p-4 font-medium text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${rows}</tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // 5. CHART.JS INITIALIZATION
+        // ==========================================
+
+        function initDashboardCharts() {
+            const ctx = document.getElementById('revenueChart');
+            if(!ctx) return;
+            
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#9ca3af' : '#4b5563';
+            const gridColor = isDark ? '#374151' : '#f3f4f6';
+
+            chartInstances.revenue = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                    datasets: [{
+                        label: 'Chiffre d\'Affaires (M MAD)',
+                        data: [2.1, 2.5, 2.4, 3.2, 3.8, 3.5, 4.1, 4.5, 4.2, 5.1, 5.8, 6.2],
+                        borderColor: '#f97316',
+                        backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: gridColor }, ticks: { color: textColor } },
+                        x: { grid: { display: false }, ticks: { color: textColor } }
+                    }
+                }
+            });
+        }
+
+        function initComptaCharts() {
+            const ctx = document.getElementById('expensesChart');
+            if(!ctx) return;
+
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#e5e7eb' : '#374151';
+
+            chartInstances.expenses = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Matériaux', 'Salaires', 'Sous-traitants', 'Équipements', 'Frais Généraux'],
+                    datasets: [{
+                        data: [45, 25, 15, 10, 5],
+                        backgroundColor: ['#f97316', '#1a2942', '#3b82f6', '#10b981', '#6b7280'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { color: textColor, font: { family: 'Inter', size: 12 } } }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        // ==========================================
+        // 6. BOOTSTRAP
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', initApp);
+
+    </script>
+</body>
+</html>
