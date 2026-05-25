@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TALeb BTP Beta - ERP & CRM</title>
+    <title>Dashboard TEST BTP Papa VERSION BETA</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -17,85 +17,61 @@
                         orange: { 500: '#f97316', 600: '#ea580c' },
                         gray: { 50: '#f9fafb', 100: '#f3f4f6', 800: '#1f2937', 900: '#111827' }
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         body { font-family: 'Inter', sans-serif; }
-        
         .glass {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
         .dark .glass {
-            background: rgba(31, 41, 55, 0.7);
+            background: rgba(31, 41, 55, 0.75);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
-        .fade-in { animation: fadeIn 0.4s ease-in-out; }
-        .slide-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 overflow-hidden flex h-screen">
 
-    <aside class="w-64 bg-navy-900 text-white flex flex-col transition-all duration-300 shadow-xl z-20">
+    <aside class="w-64 bg-navy-900 text-white flex flex-col shadow-xl z-20">
         <div class="p-6 flex items-center gap-3 border-b border-navy-800">
-            <div class="w-10 h-10 rounded-lg bg-orange-500 flex items-center justify-center text-xl font-bold shadow-lg shadow-orange-500/30">
-                T
-            </div>
+            <div class="w-10 h-10 rounded-lg bg-orange-500 flex items-center justify-center text-xl font-bold shadow-lg shadow-orange-500/30">T</div>
             <div>
                 <h1 class="font-bold text-lg tracking-wide">TALeb BTP</h1>
                 <span class="text-xs text-orange-500 font-medium tracking-widest uppercase">Beta ERP</span>
             </div>
         </div>
 
-        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1" id="sidebar-nav">
-            </nav>
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1" id="sidebar-nav"></nav>
 
         <div class="p-4 border-t border-navy-800">
             <div class="flex items-center gap-3 p-2 rounded-lg bg-navy-800/50">
-                <img src="https://i.pravatar.cc/150?img=11" alt="Profile" class="w-10 h-10 rounded-full border-2 border-orange-500">
+                <div class="w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center font-bold text-white border-2 border-orange-500">ET</div>
                 <div>
-                    <p class="text-sm font-semibold">Youssef Alaoui</p>
-                    <p class="text-xs text-gray-400">Directeur Général</p>
+                    <p class="text-sm font-semibold" id="ceo-name-display">El Mahfoud Taleb</p>
+                    <p class="text-xs text-gray-400">Président Directeur Général</p>
                 </div>
             </div>
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
         <header class="h-20 glass flex items-center justify-between px-8 z-10 border-b border-gray-200 dark:border-gray-800">
             <div class="flex items-center gap-4 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full w-96 border border-gray-200 dark:border-gray-700">
                 <i class="fas fa-search text-gray-400"></i>
-                <input type="text" placeholder="Rechercher un chantier, client, facture..." class="bg-transparent border-none outline-none w-full text-sm text-gray-700 dark:text-gray-200">
+                <input type="text" placeholder="Rechercher partout..." class="bg-transparent border-none outline-none w-full text-sm text-gray-700 dark:text-gray-200">
             </div>
 
             <div class="flex items-center gap-6">
@@ -103,85 +79,65 @@
                 <button onclick="toggleDarkMode()" class="text-gray-500 hover:text-orange-500 transition-colors w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                     <i class="fas fa-moon" id="theme-icon"></i>
                 </button>
-                <div class="relative">
-                    <button class="text-gray-500 hover:text-orange-500 transition-colors w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                        <i class="fas fa-bell"></i>
-                        <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
-                    </button>
-                </div>
-                <button class="bg-navy-900 hover:bg-navy-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg flex items-center gap-2">
-                    <i class="fas fa-plus"></i> Action Rapide
-                </button>
             </div>
         </header>
 
-        <div id="app-content" class="flex-1 overflow-y-auto p-8 scroll-smooth">
-            </div>
+        <div id="app-content" class="flex-1 overflow-y-auto p-8 scroll-smooth"></div>
     </main>
+
+    <div id="crud-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-gray-100 dark:border-gray-700 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4" id="modal-title">Formulaire</h3>
+            <form id="modal-form" onsubmit="handleFormSubmit(event)">
+                <div id="modal-fields" class="space-y-4"></div>
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium">Annuler</button>
+                    <button type="submit" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-medium shadow-md shadow-orange-500/20">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         // ==========================================
-        // 1. MOCK DATA (Moroccan BTP Context)
+        // 1. DYNAMIC MOROCCAN DATA STORE
         // ==========================================
-        
-        const database = {
-            company: { balance: 14580000.00, revenue: 32450000.00, expenses: 17870000.00 },
+        let database = {
             navItems: [
                 { id: 'dashboard', icon: 'fa-chart-pie', label: 'Tableau de bord' },
-                { id: 'chantiers', icon: 'fa-hard-hat', label: 'Chantiers' },
-                { id: 'comptabilite', icon: 'fa-file-invoice-dollar', label: 'Comptabilité' },
-                { id: 'clients', icon: 'fa-building', label: 'Clients' },
-                { id: 'employes', icon: 'fa-users-gear', label: 'Employés' },
-                { id: 'stocks', icon: 'fa-boxes-stacked', label: 'Stocks & Matériel' },
-            ],
-            kpis: [
-                { title: "Chiffre d'Affaires", value: "32,45M MAD", trend: "+14%", icon: "fa-wallet", color: "text-green-500", bg: "bg-green-100" },
-                { title: "Dépenses", value: "17,87M MAD", trend: "-2%", icon: "fa-chart-line", color: "text-red-500", bg: "bg-red-100" },
-                { title: "Chantiers Actifs", value: "12", trend: "+3", icon: "fa-helmet-safety", color: "text-orange-500", bg: "bg-orange-100" },
-                { title: "Factures Impayées", value: "2,1M MAD", trend: "-5%", icon: "fa-file-circle-exclamation", color: "text-yellow-500", bg: "bg-yellow-100" }
+                { id: 'chantiers', icon: 'fa-hard-hat', label: 'Chantiers BTP' },
+                { id: 'comptabilite', icon: 'fa-scale-balanced', label: 'Comptabilité MA' },
+                { id: 'clients', icon: 'fa-building', label: 'Clients & CRM' }
             ],
             chantiers: [
-                { id: "CH-001", nom: "Résidence Horizon", lieu: "Casablanca, Maarif", budget: 45000000, depenses: 21000000, progression: 45, status: "En cours", chef: "Rachid Benali" },
-                { id: "CH-002", nom: "Marina Tower B", lieu: "Tanger", budget: 85000000, depenses: 78000000, progression: 92, status: "Finition", chef: "Amine Tazi" },
-                { id: "CH-003", nom: "Hôpital Sud", lieu: "Rabat, Hay Riad", budget: 120000000, depenses: 15000000, progression: 15, status: "Fondations", chef: "Hassan El Fassi" },
-                { id: "CH-004", nom: "Villa Prestige", lieu: "Marrakech, Palmeraie", budget: 8500000, depenses: 8500000, progression: 100, status: "Terminé", chef: "Karim Ziani" },
-                { id: "CH-005", nom: "Usine Renault Ext", lieu: "Kenitra", budget: 32000000, depenses: 12000000, progression: 35, status: "En cours", chef: "Omar Mansour" }
+                { id: "1", nom: "Résidence Horizon", lieu: "Casablanca, Gauthier", budget: 45000000, depenses: 21000000, progression: 45, status: "En cours", chef: "Rachid Benali" },
+                { id: "2", nom: "Marina Tower B", lieu: "Tanger Centre", budget: 85000000, depenses: 78000000, progression: 92, status: "Finition", chef: "Amine Tazi" },
+                { id: "3", nom: "Hôpital Provincial", lieu: "Rabat, Hay Riad", budget: 120000000, depenses: 15000000, progression: 15, status: "Fondations", chef: "Hassan El Fassi" }
             ],
-            transactions: [
-                { date: "25/05/2026", desc: "Paiement Fournisseur (LafargeHolcim)", montant: -245000, type: "Debit", chantier: "Résidence Horizon" },
-                { date: "22/05/2026", desc: "Encaissement Client (Casa Promotion)", montant: 1500000, type: "Credit", chantier: "Marina Tower B" },
-                { date: "18/05/2026", desc: "Salaires Mai - Equipe Casa", montant: -480000, type: "Debit", chantier: "Global" },
-                { date: "15/05/2026", desc: "Achat Acier (Sonasid)", montant: -850000, type: "Debit", chantier: "Hôpital Sud" },
-                { date: "10/05/2026", desc: "Avance Client (Etat Marocain)", montant: 5000000, type: "Credit", chantier: "Hôpital Sud" }
+            comptabilite: [
+                { id: "1", date: "2026-05-24", piece: "FA-2026-089", libelle: "Achat Ciment - LafargeHolcim Maroc", debit: 120000, credit: 0, tva: "20%", imputation: "Matériaux", chantier: "Résidence Horizon" },
+                { id: "2", date: "2026-05-22", piece: "DEC-2026-004", libelle: "Encaissement Décompte N°3 - Casa Promotion", debit: 0, credit: 3450000, tva: "20%", imputation: "Production", chantier: "Marina Tower B" },
+                { id: "3", date: "2026-05-20", piece: "OD-5542", libelle: "Paiement CNSS & Retenues sur Salaires", debit: 85000, credit: 0, tva: "0%", imputation: "Main d'œuvre", chantier: "Structurel Global" },
+                { id: "4", date: "2026-05-18", piece: "FA-2026-090", libelle: "Achat Rond à Béton - Sonasid", debit: 450000, credit: 0, tva: "20%", imputation: "Matériaux", chantier: "Hôpital Provincial" }
             ],
             clients: [
-                { nom: "Atlas Infrastructure", contact: "M. Idrissi", email: "contact@atlas-infra.ma", tel: "+212 5 22 33 44 55", status: "Actif", projets: 4 },
-                { nom: "Casa Promotion Immobilière", contact: "Mme. Bennani", email: "direction@casapromo.ma", tel: "+212 5 22 11 22 33", status: "Actif", projets: 2 },
-                { nom: "Rabat Aménagement", contact: "M. Alaoui", email: "marches@rabat-am.gov.ma", tel: "+212 5 37 99 88 77", status: "VIP", projets: 6 },
-                { nom: "Groupe El Hana", contact: "M. Chraibi", email: "achats@elhana.ma", tel: "+212 6 61 00 11 22", status: "Inactif", projets: 1 }
+                { id: "1", nom: "Atlas Infrastructure S.A.", contact: "M. Idrissi", email: "contact@atlas-infra.ma", tel: "+212 5 22 33 44 55", status: "VIP", ice: "001548721000085" },
+                { id: "2", nom: "Casa Promotion Immobilière", contact: "Mme. Bennani", email: "direction@casapromo.ma", tel: "+212 5 22 11 22 33", status: "Actif", ice: "002241578000091" },
+                { id: "3", nom: "Rabat Aménagement State", contact: "M. Alaoui", email: "marches@rabat-am.gov.ma", tel: "+212 5 37 99 88 77", status: "Actif", ice: "000998412000044" }
             ]
         };
 
-        // ==========================================
-        // 2. STATE MANAGEMENT
-        // ==========================================
         let currentView = 'dashboard';
+        let currentEditingTarget = null; // Track current object for edits
         let chartInstances = {};
 
         // ==========================================
-        // 3. CORE FUNCTIONS
+        // 2. APP STATE ENGINE & CALCULATIONS
         // ==========================================
-        
         function initApp() {
             document.getElementById('current-date').innerText = new Date().toLocaleDateString('fr-MA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             renderNavigation();
             navigate('dashboard');
-            
-            // Check local storage for theme
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
-            }
         }
 
         function toggleDarkMode() {
@@ -189,23 +145,19 @@
             const icon = document.getElementById('theme-icon');
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
                 icon.classList.replace('fa-sun', 'fa-moon');
             } else {
                 html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
                 icon.classList.replace('fa-moon', 'fa-sun');
             }
-            // Re-render current view to update charts theme
-            navigate(currentView);
+            navigate(currentView); // Redraw view
         }
 
         function renderNavigation() {
             const nav = document.getElementById('sidebar-nav');
             nav.innerHTML = database.navItems.map(item => `
-                <button onclick="navigate('${item.id}')" id="nav-${item.id}" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${currentView === item.id ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-gray-300 hover:bg-navy-800 hover:text-white'}">
-                    <i class="fas ${item.icon} w-5"></i>
-                    ${item.label}
+                <button onclick="navigate('${item.id}')" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${currentView === item.id ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-gray-300 hover:bg-navy-800 hover:text-white'}">
+                    <i class="fas ${item.icon} w-5"></i> ${item.label}
                 </button>
             `).join('');
         }
@@ -213,83 +165,92 @@
         function navigate(viewId) {
             currentView = viewId;
             renderNavigation();
-            
             const contentDiv = document.getElementById('app-content');
-            contentDiv.innerHTML = '<div class="flex h-full items-center justify-center"><i class="fas fa-spinner fa-spin text-4xl text-orange-500"></i></div>';
             
-            // Destroy existing charts to prevent memory leaks
-            Object.values(chartInstances).forEach(chart => chart.destroy());
+            // Clean charts
+            Object.values(chartInstances).forEach(c => c.destroy());
             chartInstances = {};
 
-            setTimeout(() => {
-                switch(viewId) {
-                    case 'dashboard': contentDiv.innerHTML = getDashboardHTML(); initDashboardCharts(); break;
-                    case 'chantiers': contentDiv.innerHTML = getChantiersHTML(); break;
-                    case 'comptabilite': contentDiv.innerHTML = getComptabiliteHTML(); initComptaCharts(); break;
-                    case 'clients': contentDiv.innerHTML = getClientsHTML(); break;
-                    default: contentDiv.innerHTML = `<div class="text-center py-20 fade-in"><h2 class="text-2xl font-bold text-gray-500">Module ${viewId} en cours de développement...</h2><p class="text-gray-400 mt-2">Bientôt disponible dans TALeb BTP Beta.</p></div>`;
-                }
-            }, 300); // Simulate network load
+            switch(viewId) {
+                case 'dashboard': contentDiv.innerHTML = renderDashboard(); initDashboardCharts(); break;
+                case 'chantiers': contentDiv.innerHTML = renderChantiers(); break;
+                case 'comptabilite': contentDiv.innerHTML = renderComptabilite(); initComptaCharts(); break;
+                case 'clients': contentDiv.innerHTML = renderClients(); break;
+            }
+        }
+
+        // Financial aggregations
+        function getFinancials() {
+            let totalChantiersBudget = database.chantiers.reduce((acc, c) => acc + c.budget, 0);
+            let totalChantiersSpent = database.chantiers.reduce((acc, c) => acc + c.depenses, 0);
+            let totalDebitCompta = database.comptabilite.reduce((acc, t) => acc + t.debit, 0);
+            let totalCreditCompta = database.comptabilite.reduce((acc, t) => acc + t.credit, 0);
+
+            return {
+                ca: totalCreditCompta || 5400000, 
+                depenses: totalChantiersSpent + totalDebitCompta,
+                treso: (totalCreditCompta - totalDebitCompta) + 12000000, // starting fund base
+                actifs: database.chantiers.filter(c => c.status !== "Terminé").length
+            };
         }
 
         // ==========================================
-        // 4. VIEWS HTML GENERATORS
+        // 3. RENDER MODULES & SECTIONS
         // ==========================================
-
-        function getDashboardHTML() {
-            const kpiCards = database.kpis.map((kpi, index) => `
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 slide-up" style="animation-delay: ${index * 0.1}s">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">${kpi.title}</p>
-                            <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">${kpi.value}</h3>
-                        </div>
-                        <div class="w-12 h-12 rounded-full ${kpi.bg} ${kpi.color} flex items-center justify-center text-xl">
-                            <i class="fas ${kpi.icon}"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center gap-2 text-sm">
-                        <span class="${kpi.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'} font-medium"><i class="fas ${kpi.trend.startsWith('+') ? 'fa-arrow-up' : 'fa-arrow-down'} mr-1"></i>${kpi.trend}</span>
-                        <span class="text-gray-400">vs mois dernier</span>
-                    </div>
-                </div>
-            `).join('');
-
+        function renderDashboard() {
+            const fin = getFinancials();
             return `
                 <div class="space-y-6 fade-in">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Aperçu Général</h2>
-                        <button class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                            <i class="fas fa-download mr-2"></i> Exporter Rapport
-                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Tableau de bord Principal</h2>
+                            <p class="text-sm text-gray-500">Suivi en temps réel de l'activité de TALeb BTP Beta</p>
+                        </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        ${kpiCards}
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                            <p class="text-sm text-gray-500 font-medium">Flux Trésorerie Actuel</p>
+                            <h3 class="text-2xl font-bold mt-1 text-green-600">${fin.treso.toLocaleString('fr-MA')} MAD</h3>
+                            <div class="text-xs text-gray-400 mt-2">Fonds propres disponibles</div>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                            <p class="text-sm text-gray-500 font-medium">Production Engagée (CA)</p>
+                            <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">${fin.ca.toLocaleString('fr-MA')} MAD</h3>
+                            <div class="text-xs text-gray-400 mt-2">Sur base des décomptes validés</div>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                            <p class="text-sm text-gray-500 font-medium">Total Dépenses Consommées</p>
+                            <h3 class="text-2xl font-bold mt-1 text-red-500">${fin.depenses.toLocaleString('fr-MA')} MAD</h3>
+                            <div class="text-xs text-gray-400 mt-2">Matériaux, engins & main d'œuvre</div>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                            <p class="text-sm text-gray-500 font-medium">Chantiers Actifs</p>
+                            <h3 class="text-2xl font-bold mt-1 text-orange-500">${fin.actifs} / ${database.chantiers.length}</h3>
+                            <div class="text-xs text-gray-400 mt-2">Suivis sur le territoire national</div>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-                        <div class="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 slide-up" style="animation-delay: 0.4s">
-                            <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-white">Évolution du Chiffre d'Affaires (2025-2026)</h3>
-                            <canvas id="revenueChart" height="100"></canvas>
+                        <div class="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                            <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-white">Évolution Budgétaire Analytique</h3>
+                            <div class="h-64"><canvas id="dashLineChart"></canvas></div>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 slide-up" style="animation-delay: 0.5s">
-                            <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-white">Activités Récentes</h3>
-                            <div class="space-y-4">
-                                ${database.transactions.slice(0,4).map(t => `
-                                    <div class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
-                                        <div class="w-10 h-10 rounded-full ${t.type === 'Credit' ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'} flex items-center justify-center">
-                                            <i class="fas ${t.type === 'Credit' ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <p class="text-sm font-semibold text-gray-800 dark:text-white truncate">${t.desc}</p>
-                                            <p class="text-xs text-gray-500">${t.chantier} • ${t.date}</p>
-                                        </div>
-                                        <div class="text-sm font-bold ${t.type === 'Credit' ? 'text-green-500' : 'text-red-500'}">
-                                            ${t.montant > 0 ? '+' : ''}${t.montant.toLocaleString('fr-MA')} MAD
-                                        </div>
-                                    </div>
-                                `).join('')}
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">Rubriques Globales</h3>
+                                <p class="text-xs text-gray-400 mb-4">Accès rapide aux actions d'édition</p>
+                            </div>
+                            <div class="space-y-3">
+                                <button onclick="navigate('chantiers')" class="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-orange-500 hover:text-white rounded-xl text-left font-medium text-sm transition flex justify-between items-center">
+                                    <span><i class="fas fa-hard-hat mr-2"></i> Gérer les Chantiers</span> <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                                <button onclick="navigate('comptabilite')" class="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-orange-500 hover:text-white rounded-xl text-left font-medium text-sm transition flex justify-between items-center">
+                                    <span><i class="fas fa-scale-balanced mr-2"></i> Écritures & Comptabilité</span> <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                                <button onclick="navigate('clients')" class="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-orange-500 hover:text-white rounded-xl text-left font-medium text-sm transition flex justify-between items-center">
+                                    <span><i class="fas fa-building mr-2"></i> Fiches Clients & CRM</span> <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -297,44 +258,45 @@
             `;
         }
 
-        function getChantiersHTML() {
-            const cards = database.chantiers.map((ch, index) => {
+        function renderChantiers() {
+            const itemsHtml = database.chantiers.map(ch => {
                 let statusColor = ch.status === 'En cours' ? 'bg-blue-100 text-blue-600' : ch.status === 'Finition' ? 'bg-orange-100 text-orange-600' : ch.status === 'Fondations' ? 'bg-purple-100 text-purple-600' : 'bg-green-100 text-green-600';
                 return `
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 slide-up hover:shadow-md transition-shadow cursor-pointer" style="animation-delay: ${index * 0.1}s">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
                             <span class="text-xs font-bold px-2 py-1 rounded-md ${statusColor}">${ch.status}</span>
-                            <h3 class="text-lg font-bold mt-2 text-gray-800 dark:text-white">${ch.nom}</h3>
-                            <p class="text-sm text-gray-500"><i class="fas fa-map-marker-alt mr-1"></i> ${ch.lieu}</p>
+                            <div class="flex gap-2">
+                                <button onclick="openChantierModal('${ch.id}')" class="text-gray-400 hover:text-orange-500 text-sm"><i class="fas fa-edit"></i></button>
+                                <button onclick="deleteItem('chantiers', '${ch.id}')" class="text-gray-400 hover:text-red-500 text-sm"><i class="fas fa-trash"></i></button>
+                            </div>
                         </div>
-                        <button class="text-gray-400 hover:text-orange-500"><i class="fas fa-ellipsis-v"></i></button>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-gray-500">Progression</span>
-                            <span class="font-bold text-gray-800 dark:text-white">${ch.progression}%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div class="bg-orange-500 h-2 rounded-full" style="width: ${ch.progression}%"></div>
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">${ch.nom}</h3>
+                        <p class="text-sm text-gray-500 mb-4"><i class="fas fa-map-marker-alt mr-1"></i> ${ch.lieu}</p>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-gray-400">Progression Travaux</span>
+                                <span class="font-bold">${ch.progression}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: ${ch.progression}%"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 text-sm pt-4 border-t border-gray-100 dark:border-gray-700">
+                    <div class="grid grid-cols-2 gap-2 text-xs pt-4 border-t border-gray-100 dark:border-gray-700">
                         <div>
-                            <p class="text-gray-500 text-xs">Budget Alloué</p>
-                            <p class="font-bold text-gray-800 dark:text-white">${(ch.budget / 1000000).toFixed(1)}M MAD</p>
+                            <span class="text-gray-400 block">Budget (MAD)</span>
+                            <span class="font-bold">${ch.budget.toLocaleString()}</span>
                         </div>
                         <div>
-                            <p class="text-gray-500 text-xs">Dépensé</p>
-                            <p class="font-bold text-gray-800 dark:text-white">${(ch.depenses / 1000000).toFixed(1)}M MAD</p>
+                            <span class="text-gray-400 block">Dépensé (MAD)</span>
+                            <span class="font-bold text-red-500">${ch.depenses.toLocaleString()}</span>
                         </div>
-                    </div>
-                    
-                    <div class="mt-4 flex items-center gap-2 pt-4 border-t border-gray-100 dark:border-gray-700">
-                        <div class="w-8 h-8 rounded-full bg-navy-800 text-white flex items-center justify-center text-xs font-bold">${ch.chef.charAt(0)}</div>
-                        <p class="text-xs text-gray-600 dark:text-gray-400">Chef: <span class="font-medium text-gray-800 dark:text-white">${ch.chef}</span></p>
+                        <div class="col-span-2 mt-2">
+                            <span class="text-gray-400">Conducteur :</span> <span class="font-medium text-gray-700 dark:text-gray-300">${ch.chef}</span>
+                        </div>
                     </div>
                 </div>
             `}).join('');
@@ -343,102 +305,35 @@
                 <div class="space-y-6 fade-in">
                     <div class="flex justify-between items-center">
                         <div>
-                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Gestion des Chantiers</h2>
-                            <p class="text-gray-500 text-sm">Suivi et pilotage des projets de construction</p>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Chantiers & Projets Opérationnels</h2>
+                            <p class="text-sm text-gray-500">Suivi technique et financier complet</p>
                         </div>
-                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg shadow-orange-500/30 flex items-center gap-2">
-                            <i class="fas fa-plus"></i> Nouveau Chantier
+                        <button onclick="openChantierModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg shadow-orange-500/20 flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Ajouter un Chantier
                         </button>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        ${cards}
-                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${itemsHtml}</div>
                 </div>
             `;
         }
 
-        function getComptabiliteHTML() {
-            const trs = database.transactions.map(t => `
+        function renderComptabilite() {
+            const rows = database.comptabilite.map(t => `
                 <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
                     <td class="p-4 text-sm text-gray-500">${t.date}</td>
-                    <td class="p-4 text-sm font-medium text-gray-800 dark:text-gray-200">${t.desc}</td>
-                    <td class="p-4 text-sm text-gray-500">${t.chantier}</td>
-                    <td class="p-4 text-sm font-bold text-right ${t.type === 'Credit' ? 'text-green-500' : 'text-gray-800 dark:text-white'}">${t.montant.toLocaleString('fr-MA')} MAD</td>
-                    <td class="p-4 text-center">
-                        <span class="px-2 py-1 text-xs rounded-md ${t.type === 'Credit' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">${t.type}</span>
+                    <td class="p-4 text-sm font-medium text-gray-800 dark:text-gray-200">${t.piece}</td>
+                    <td class="p-4 text-sm text-gray-700 dark:text-gray-300">
+                        <div class="font-semibold">${t.libelle}</div>
+                        <div class="text-xs text-gray-400">Chantier: ${t.chantier} | Imputation: ${t.imputation}</div>
                     </td>
-                </tr>
-            `).join('');
-
-            return `
-                <div class="space-y-6 fade-in">
-                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Comptabilité & Finance</h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-navy-900 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
-                            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-orange-500 rounded-full opacity-20 blur-2xl"></div>
-                            <p class="text-gray-300 text-sm">Trésorerie Actuelle</p>
-                            <h3 class="text-3xl font-bold mt-2">${database.company.balance.toLocaleString('fr-MA')} MAD</h3>
-                            <button class="mt-4 text-sm text-orange-400 hover:text-orange-300 font-medium">Voir le détail bancaire <i class="fas fa-arrow-right ml-1"></i></button>
-                        </div>
-                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 col-span-2">
-                             <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-lg font-bold text-gray-800 dark:text-white">Répartition des Dépenses</h3>
-                             </div>
-                             <div class="h-40 w-full relative">
-                                <canvas id="expensesChart"></canvas>
-                             </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden slide-up">
-                        <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">Journal Comptable (Mai 2026)</h3>
-                            <div class="flex gap-2">
-                                <button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><i class="fas fa-filter"></i></button>
-                                <button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><i class="fas fa-print"></i></button>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="bg-gray-50 dark:bg-gray-900/50 text-gray-500 text-xs uppercase tracking-wider">
-                                        <th class="p-4 font-medium">Date</th>
-                                        <th class="p-4 font-medium">Libellé</th>
-                                        <th class="p-4 font-medium">Imputation</th>
-                                        <th class="p-4 font-medium text-right">Montant</th>
-                                        <th class="p-4 font-medium text-center">Type</th>
-                                    </tr>
-                                </thead>
-                                <tbody>${trs}</tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getClientsHTML() {
-            const rows = database.clients.map((c, i) => `
-                <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition slide-up" style="animation-delay: ${i * 0.1}s">
-                    <td class="p-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-navy-800 text-white flex items-center justify-center font-bold text-lg">${c.nom.charAt(0)}</div>
-                            <div>
-                                <p class="font-bold text-gray-800 dark:text-white">${c.nom}</p>
-                                <p class="text-xs text-gray-500">${c.email}</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="p-4 text-sm text-gray-600 dark:text-gray-300">${c.contact}</td>
-                    <td class="p-4 text-sm text-gray-600 dark:text-gray-300">${c.tel}</td>
-                    <td class="p-4 text-center text-sm font-bold text-gray-800 dark:text-white">${c.projets}</td>
-                    <td class="p-4">
-                        <span class="px-3 py-1 text-xs rounded-full ${c.status === 'Actif' ? 'bg-green-100 text-green-600' : c.status === 'VIP' ? 'bg-purple-100 text-purple-600' : 'bg-gray-100 text-gray-600'}">${c.status}</span>
-                    </td>
+                    <td class="p-4 text-sm text-gray-500 text-center">${t.tva}</td>
+                    <td class="p-4 text-sm font-bold text-right text-red-500">${t.debit > 0 ? t.debit.toLocaleString() + ' MAD' : '-'}</td>
+                    <td class="p-4 text-sm font-bold text-right text-green-500">${t.credit > 0 ? t.credit.toLocaleString() + ' MAD' : '-'}</td>
                     <td class="p-4 text-right">
-                        <button class="text-gray-400 hover:text-orange-500 transition px-2"><i class="fas fa-edit"></i></button>
-                        <button class="text-gray-400 hover:text-red-500 transition px-2"><i class="fas fa-trash"></i></button>
+                        <div class="flex gap-3 justify-end">
+                            <button onclick="openComptaModal('${t.id}')" class="text-gray-400 hover:text-orange-500"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteItem('comptabilite', t.id)" class="text-gray-400 hover:text-red-500"><i class="fas fa-trash"></i></button>
+                        </div>
                     </td>
                 </tr>
             `).join('');
@@ -446,30 +341,46 @@
             return `
                 <div class="space-y-6 fade-in">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Annuaire Clients B2B</h2>
-                        <button class="bg-navy-900 hover:bg-navy-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg flex items-center gap-2">
-                            <i class="fas fa-user-plus"></i> Nouveau Client
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Comptabilité Marocaine - Plan de compte BTP</h2>
+                            <p class="text-sm text-gray-500">Journal d'écritures, suivi TVA globale à 20% et décomptes</p>
+                        </div>
+                        <button onclick="openComptaModal()" class="bg-navy-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-navy-800 transition flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Saisir une Écriture
                         </button>
                     </div>
 
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
-                        <div class="p-4 border-b border-gray-100 dark:border-gray-800 flex gap-4 bg-gray-50 dark:bg-gray-900/50">
-                            <div class="flex-1 relative">
-                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-                                <input type="text" placeholder="Rechercher une entreprise..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm outline-none focus:border-orange-500">
-                            </div>
-                            <button class="px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-800 font-medium"><i class="fas fa-filter mr-2"></i>Filtres</button>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 col-span-2">
+                            <h3 class="text-md font-bold mb-2">Structure analytique des dépenses</h3>
+                            <div class="h-44"><canvas id="comptaPieChart"></canvas></div>
                         </div>
+                        <div class="bg-gradient-to-br from-navy-900 to-gray-800 text-white p-6 rounded-2xl shadow-md flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs font-bold px-2 py-1 bg-orange-500 rounded text-white uppercase tracking-wider">Règles fiscales MA</span>
+                                <h4 class="text-lg font-bold mt-3">Retenue de garantie</h4>
+                                <p class="text-xs text-gray-300 mt-1">Application standard de 7% sur les marchés de travaux publics et privés marocains.</p>
+                            </div>
+                            <div class="border-t border-gray-700 pt-4 mt-4">
+                                <div class="text-xs text-gray-400">TVA BTP Standard</div>
+                                <div class="text-xl font-bold text-orange-500">20% (Régime des encaissements)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                        <div class="p-6 border-b border-gray-100 dark:border-gray-800 font-bold text-lg">Grand Journal des Opérations</div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-white dark:bg-gray-800 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100 dark:border-gray-700">
-                                        <th class="p-4 font-medium">Entreprise</th>
-                                        <th class="p-4 font-medium">Contact Principal</th>
-                                        <th class="p-4 font-medium">Téléphone</th>
-                                        <th class="p-4 font-medium text-center">Projets</th>
-                                        <th class="p-4 font-medium">Statut</th>
-                                        <th class="p-4 font-medium text-right">Actions</th>
+                                    <tr class="bg-gray-50 dark:bg-gray-900/50 text-gray-500 text-xs uppercase border-b border-gray-100 dark:border-gray-800">
+                                        <th class="p-4">Date</th>
+                                        <th class="p-4">N° Pièce</th>
+                                        <th class="p-4">Libellé / Imputation</th>
+                                        <th class="p-4 text-center">TVA</th>
+                                        <th class="p-4 text-right">Débit (Achat)</th>
+                                        <th class="p-4 text-right">Crédit (Vente)</th>
+                                        <th class="p-4 text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>${rows}</tbody>
@@ -480,78 +391,266 @@
             `;
         }
 
-        // ==========================================
-        // 5. CHART.JS INITIALIZATION
-        // ==========================================
+        function renderClients() {
+            const rows = database.clients.map(c => `
+                <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
+                    <td class="p-4 font-bold text-gray-800 dark:text-white">${c.nom}</td>
+                    <td class="p-4 text-sm text-gray-600 dark:text-gray-300">${c.contact}</td>
+                    <td class="p-4 text-sm text-gray-500">${c.tel}<br><span class="text-xs text-gray-400">${c.email}</span></td>
+                    <td class="p-4 text-sm text-gray-600 dark:text-gray-400">${c.ice}</td>
+                    <td class="p-4"><span class="px-2 py-1 text-xs rounded-full ${c.status === 'VIP' ? 'bg-purple-100 text-purple-600' : 'bg-green-100 text-green-600'}">${c.status}</span></td>
+                    <td class="p-4 text-right">
+                        <div class="flex gap-3 justify-end">
+                            <button onclick="openClientModal('${c.id}')" class="text-gray-400 hover:text-orange-500"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteItem('clients', '${c.id}')" class="text-gray-400 hover:text-red-500"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
 
+            return `
+                <div class="space-y-6 fade-in">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Portefeuille Clients & CRM</h2>
+                            <p class="text-sm text-gray-500">Gestion des comptes d'infrastructures et donneurs d'ordres</p>
+                        </div>
+                        <button onclick="openClientModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg flex items-center gap-2">
+                            <i class="fas fa-user-plus"></i> Ajouter un Client
+                        </button>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 dark:bg-gray-900/50 text-gray-500 text-xs uppercase border-b border-gray-100 dark:border-gray-800">
+                                    <th class="p-4">Raison Sociale</th>
+                                    <th class="p-4">Contact</th>
+                                    <th class="p-4">Coordonnées</th>
+                                    <th class="p-4">ICE Maroc</th>
+                                    <th class="p-4">Statut</th>
+                                    <th class="p-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // 4. CHARTS CONTEXT CONFIGURATION
+        // ==========================================
         function initDashboardCharts() {
-            const ctx = document.getElementById('revenueChart');
+            const ctx = document.getElementById('dashLineChart');
             if(!ctx) return;
-            
             const isDark = document.documentElement.classList.contains('dark');
-            const textColor = isDark ? '#9ca3af' : '#4b5563';
-            const gridColor = isDark ? '#374151' : '#f3f4f6';
 
-            chartInstances.revenue = new Chart(ctx, {
-                type: 'line',
+            chartInstances.dashLine = new Chart(ctx, {
+                type: 'bar',
                 data: {
-                    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
-                    datasets: [{
-                        label: 'Chiffre d\'Affaires (M MAD)',
-                        data: [2.1, 2.5, 2.4, 3.2, 3.8, 3.5, 4.1, 4.5, 4.2, 5.1, 5.8, 6.2],
-                        borderColor: '#f97316',
-                        backgroundColor: 'rgba(249, 115, 22, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    }]
+                    labels: database.chantiers.map(c => c.nom),
+                    datasets: [
+                        { label: 'Budget global', data: database.chantiers.map(c => c.budget), backgroundColor: '#1a2942' },
+                        { label: 'Dépenses réelles', data: database.chantiers.map(c => c.depenses), backgroundColor: '#f97316' }
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { grid: { color: gridColor }, ticks: { color: textColor } },
-                        x: { grid: { display: false }, ticks: { color: textColor } }
-                    }
+                    plugins: { legend: { labels: { color: isDark ? '#fff' : '#000' } } }
                 }
             });
         }
 
         function initComptaCharts() {
-            const ctx = document.getElementById('expensesChart');
+            const ctx = document.getElementById('comptaPieChart');
             if(!ctx) return;
-
             const isDark = document.documentElement.classList.contains('dark');
-            const textColor = isDark ? '#e5e7eb' : '#374151';
 
-            chartInstances.expenses = new Chart(ctx, {
+            // Grouping allocations
+            let dataMap = {};
+            database.comptabilite.forEach(t => {
+                let val = t.debit > 0 ? t.debit : t.credit;
+                dataMap[t.imputation] = (dataMap[t.imputation] || 0) + val;
+            });
+
+            chartInstances.comptaPie = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Matériaux', 'Salaires', 'Sous-traitants', 'Équipements', 'Frais Généraux'],
+                    labels: Object.keys(dataMap),
                     datasets: [{
-                        data: [45, 25, 15, 10, 5],
-                        backgroundColor: ['#f97316', '#1a2942', '#3b82f6', '#10b981', '#6b7280'],
-                        borderWidth: 0,
-                        hoverOffset: 4
+                        data: Object.values(dataMap),
+                        backgroundColor: ['#f97316', '#3b82f6', '#10b981', '#a855f7']
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'right', labels: { color: textColor, font: { family: 'Inter', size: 12 } } }
-                    },
-                    cutout: '70%'
+                    plugins: { legend: { position: 'right', labels: { color: isDark ? '#fff' : '#000' } } }
                 }
             });
         }
 
         // ==========================================
-        // 6. BOOTSTRAP
+        // 5. GENERIC CRUD & MODAL CONTROLLERS
         // ==========================================
-        window.addEventListener('DOMContentLoaded', initApp);
+        function closeModal() {
+            document.getElementById('crud-modal').classList.replace('flex', 'hidden');
+            currentEditingTarget = null;
+        }
 
+        function showModal(title, fieldsHtml) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-fields').innerHTML = fieldsHtml;
+            document.getElementById('crud-modal').classList.replace('hidden', 'flex');
+        }
+
+        function deleteItem(rubric, id) {
+            if(confirm("Confirmez-vous la suppression définitive de cet élément ?")) {
+                database[rubric] = database[rubric].filter(item => item.id !== id);
+                navigate(currentView);
+            }
+        }
+
+        // CHANTIERS MODAL
+        function openChantierModal(id = null) {
+            let item = { nom: '', lieu: '', budget: '', depenses: '', progression: '', status: 'En cours', chef: '' };
+            if(id) {
+                item = database.chantiers.find(c => c.id === id);
+                currentEditingTarget = { rubric: 'chantiers', id: id };
+            } else {
+                currentEditingTarget = { rubric: 'chantiers', id: null };
+            }
+
+            const html = `
+                <div><label class="block text-xs font-bold mb-1">Nom du chantier</label><input type="text" name="nom" value="${item.nom}" class="w-full p-2 border rounded bg-transparent" required></div>
+                <div><label class="block text-xs font-bold mb-1">Localisation (Ville / Quartier)</label><input type="text" name="lieu" value="${item.lieu}" class="w-full p-2 border rounded bg-transparent" required></div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs font-bold mb-1">Budget (MAD)</label><input type="number" name="budget" value="${item.budget}" class="w-full p-2 border rounded bg-transparent" required></div>
+                    <div><label class="block text-xs font-bold mb-1">Dépenses actuelles (MAD)</label><input type="number" name="depenses" value="${item.depenses}" class="w-full p-2 border rounded bg-transparent" required></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs font-bold mb-1">Progression (%)</label><input type="number" name="progression" value="${item.progression}" min="0" max="100" class="w-full p-2 border rounded bg-transparent" required></div>
+                    <div><label class="block text-xs font-bold mb-1">Statut</label>
+                        <select name="status" class="w-full p-2 border rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                            <option ${item.status === 'Fondations' ? 'selected':''}>Fondations</option>
+                            <option ${item.status === 'En cours' ? 'selected':''}>En cours</option>
+                            <option ${item.status === 'Finition' ? 'selected':''}>Finition</option>
+                            <option ${item.status === 'Terminé' ? 'selected':''}>Terminé</option>
+                        </select>
+                    </div>
+                </div>
+                <div><label class="block text-xs font-bold mb-1">Chef de chantier / Conducteur</label><input type="text" name="chef" value="${item.chef}" class="w-full p-2 border rounded bg-transparent" required></div>
+            `;
+            showModal(id ? "Modifier le Chantier" : "Créer un nouveau chantier", html);
+        }
+
+        // COMPTABILITE MODAL
+        function openComptaModal(id = null) {
+            let item = { date: new Date().toISOString().split('T')[0], piece: '', libelle: '', debit: 0, credit: 0, tva: '20%', imputation: 'Matériaux', chantier: 'Global' };
+            if(id) {
+                item = database.comptabilite.find(t => t.id === id);
+                currentEditingTarget = { rubric: 'comptabilite', id: id };
+            } else {
+                currentEditingTarget = { rubric: 'comptabilite', id: null };
+            }
+
+            const html = `
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs font-bold mb-1">Date pièce</label><input type="date" name="date" value="${item.date}" class="w-full p-2 border rounded bg-transparent" required></div>
+                    <div><label class="block text-xs font-bold mb-1">N° de Pièce / Facture</label><input type="text" name="piece" value="${item.piece}" placeholder="FA-2026-XXXX" class="w-full p-2 border rounded bg-transparent" required></div>
+                </div>
+                <div><label class="block text-xs font-bold mb-1">Désignation / Libellé de l'opération</label><input type="text" name="libelle" value="${item.libelle}" class="w-full p-2 border rounded bg-transparent" required></div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs font-bold mb-1">Débit (Achat H.T)</label><input type="number" name="debit" value="${item.debit}" class="w-full p-2 border rounded bg-transparent"></div>
+                    <div><label class="block text-xs font-bold mb-1">Crédit (Encaissement H.T)</label><input type="number" name="credit" value="${item.credit}" class="w-full p-2 border rounded bg-transparent"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div><label class="block text-xs font-bold mb-1">TVA Applicable</label>
+                        <select name="tva" class="w-full p-2 border rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                            <option ${item.tva === '20%' ? 'selected':''}>20%</option>
+                            <option ${item.tva === '14%' ? 'selected':''}>14%</option>
+                            <option ${item.tva === '0%' ? 'selected':''}>0%</option>
+                        </select>
+                    </div>
+                    <div><label class="block text-xs font-bold mb-1">Imputation</label>
+                        <select name="imputation" class="w-full p-2 border rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                            <option ${item.imputation === 'Matériaux' ? 'selected':''}>Matériaux</option>
+                            <option ${item.imputation === 'Main d\'œuvre' ? 'selected':''}>Main d'œuvre</option>
+                            <option ${item.imputation === 'Production' ? 'selected':''}>Production</option>
+                            <option ${item.imputation === 'Logistique' ? 'selected':''}>Logistique</option>
+                        </select>
+                    </div>
+                    <div><label class="block text-xs font-bold mb-1">Chantier rattaché</label><input type="text" name="chantier" value="${item.chantier}" class="w-full p-2 border rounded bg-transparent" required></div>
+                </div>
+            `;
+            showModal(id ? "Modifier l'écriture comptable" : "Ajouter une écriture au journal", html);
+        }
+
+        // CLIENTS MODAL
+        function openClientModal(id = null) {
+            let item = { nom: '', contact: '', email: '', tel: '', status: 'Actif', ice: '' };
+            if(id) {
+                item = database.clients.find(c => c.id === id);
+                currentEditingTarget = { rubric: 'clients', id: id };
+            } else {
+                currentEditingTarget = { rubric: 'clients', id: null };
+            }
+
+            const html = `
+                <div><label class="block text-xs font-bold mb-1">Raison sociale</label><input type="text" name="nom" value="${item.nom}" class="w-full p-2 border rounded bg-transparent" required></div>
+                <div><label class="block text-xs font-bold mb-1">Nom du contact direct</label><input type="text" name="contact" value="${item.contact}" class="w-full p-2 border rounded bg-transparent" required></div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs font-bold mb-1">Téléphone</label><input type="text" name="tel" value="${item.tel}" class="w-full p-2 border rounded bg-transparent" required></div>
+                    <div><label class="block text-xs font-bold mb-1">E-mail</label><input type="email" name="email" value="${item.email}" class="w-full p-2 border rounded bg-transparent" required></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs font-bold mb-1">Identifiant Commun (ICE)</label><input type="text" name="ice" value="${item.ice}" placeholder="15 chiffres" class="w-full p-2 border rounded bg-transparent" required></div>
+                    <div><label class="block text-xs font-bold mb-1">Classification client</label>
+                        <select name="status" class="w-full p-2 border rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                            <option ${item.status === 'Actif' ? 'selected':''}>Actif</option>
+                            <option ${item.status === 'VIP' ? 'selected':''}>VIP</option>
+                            <option ${item.status === 'Inactif' ? 'selected':''}>Inactif</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+            showModal(id ? "Modifier la fiche client" : "Créer une fiche client B2B", html);
+        }
+
+        // FORM SUBMISSION HANDLER
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            let updatedObj = {};
+            formData.forEach((value, key) => {
+                // Parsing numeric strings where essential
+                if(['budget', 'depenses', 'progression', 'debit', 'credit'].includes(key)) {
+                    updatedObj[key] = Number(value) || 0;
+                } else {
+                    updatedObj[key] = value;
+                }
+            });
+
+            const rubric = currentEditingTarget.rubric;
+            if(currentEditingTarget.id) {
+                // UPDATE
+                let idx = database[rubric].findIndex(x => x.id === currentEditingTarget.id);
+                updatedObj.id = currentEditingTarget.id;
+                database[rubric][idx] = updatedObj;
+            } else {
+                // CREATE
+                updatedObj.id = (database[rubric].length + 1).toString();
+                database[rubric].unshift(updatedObj);
+            }
+
+            closeModal();
+            navigate(currentView); // Redraw interface dynamically
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
